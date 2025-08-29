@@ -1,0 +1,62 @@
+openapi: 3.0.3
+info:
+  title: Skedway Lite API
+  version: "1.0.0"
+servers:
+  - url: http://localhost:8080/api
+paths:
+  /rooms:
+    get:
+      summary: List rooms
+      responses:
+        "200":
+          description: OK
+  /users:
+    get:
+      summary: List users
+      responses:
+        "200":
+          description: OK
+  /reservations:
+    get:
+      summary: List reservations
+      parameters:
+        - in: query
+          name: room_id
+          schema: { type: integer }
+        - in: query
+          name: user_id
+          schema: { type: integer }
+      responses:
+        "200":
+          description: OK
+    post:
+      summary: Create reservation
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [room_id,user_id,start_at,end_at]
+              properties:
+                room_id: { type: integer }
+                user_id: { type: integer }
+                start_at: { type: string, format: date-time }
+                end_at: { type: string, format: date-time }
+      responses:
+        "201":
+          description: Created
+        "422":
+          description: Overlap or validation error
+  /reservations/{id}:
+    delete:
+      summary: Cancel reservation
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema: { type: integer }
+      responses:
+        "204":
+          description: No Content
