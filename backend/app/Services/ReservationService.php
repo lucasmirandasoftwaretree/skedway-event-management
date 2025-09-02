@@ -18,7 +18,7 @@ class ReservationService
                 ->lockForUpdate()
                 ->exists();
             if ($overlap) {
-                abort(422, 'Reservation overlaps');
+                abort(422, 'Conflito de Reservas!');
             }
             $reservation = Reservation::create([
                 'room_id' => $roomId,

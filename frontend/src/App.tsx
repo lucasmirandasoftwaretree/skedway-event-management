@@ -8,6 +8,7 @@ import { Toaster } from 'react-hot-toast'
 export default function App() {
     const [rooms, setRooms] = useState<Room[]>([])
     const [roomId, setRoomId] = useState<number>(0)
+    const [listKey, setListKey] = useState(0)
 
     useEffect(() => {
         api.get('/rooms').then((r) => {
@@ -17,6 +18,7 @@ export default function App() {
     }, [])
 
     const onCreated = (_r: Reservation) => {
+        setListKey((k) => k + 1)
     }
 
     return (
@@ -46,7 +48,7 @@ export default function App() {
                     </div>
 
                     <div className="col-12">
-                        <ReservationList selectedRoomId={roomId} />
+                        <ReservationList key={`${roomId}-${listKey}`} selectedRoomId={roomId} />
                     </div>
                 </div>
             </div>
