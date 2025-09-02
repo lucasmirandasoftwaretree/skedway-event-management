@@ -42,7 +42,7 @@ export default function App() {
                     </div>
 
                     <div className="col-12">
-                        <ReservationForm onCreated={onCreated} />
+                        <ReservationForm onCreated={onCreated} selectedRoomId={roomId} />
                     </div>
 
                     <div className="col-12">

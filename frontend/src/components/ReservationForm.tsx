@@ -1,14 +1,15 @@
 import { useEffect, useState } from 'react'
 import api from '../api'
-import type { Room, User, Reservation } from '../types'
+import type { User, Reservation } from '../types'
 import { toast } from 'react-hot-toast'
 
-type Props = { onCreated: (r: Reservation) => void }
+type Props = {
+    onCreated: (r: Reservation) => void
+    selectedRoomId: number
+}
 
-export default function ReservationForm({ onCreated }: Props) {
-    const [rooms, setRooms] = useState<Room[]>([])
+export default function ReservationForm({ onCreated, selectedRoomId }: Props) {
     const [users, setUsers] = useState<User[]>([])
-    const [roomId, setRoomId] = useState<number>(0)
     const [userId, setUserId] = useState<number>(0)
     const [startAt, setStartAt] = useState<string>('')
     const [endAt, setEndAt] = useState<string>('')
@@ -18,10 +19,12 @@ export default function ReservationForm({ onCreated }: Props) {
 
     useEffect(() => {
         setLoading(true)
-        Promise.all([api.get('/rooms'), api.get('/users')])
-            .then(([rRooms, rUsers]) => {
-                setRooms(Array.isArray(rRooms.data) ? rRooms.data : [])
-                setUsers(Array.isArray(rUsers.data) ? rUsers.data : [])
+        api
+            .get('/users')
+            .then((r) => {
+                const list = Array.isArray(r.data) ? r.data : []
+                setUsers(list)
+                if (list[0]) setUserId(list[0].id)
             })
             .catch((e) => setError(e.message))
             .finally(() => setLoading(false))
@@ -30,14 +33,14 @@ export default function ReservationForm({ onCreated }: Props) {
     const submit = async (e: React.FormEvent) => {
         e.preventDefault()
 
-        if (!roomId || !userId || !startAt || !endAt) {
+        if (!selectedRoomId || !userId || !startAt || !endAt) {
             toast.error('Preencha todos os campos')
             return
         }
 
         try {
             const payload = {
-                room_id: roomId,
+                room_id: selectedRoomId,
                 user_id: userId,
                 start_at: new Date(startAt).toISOString(),
                 end_at: new Date(endAt).toISOString(),
@@ -67,25 +70,9 @@ export default function ReservationForm({ onCreated }: Props) {
             <div className="col-md-3">
                 <select
                     className="form-select"
-                    value={roomId}
-                    onChange={(e) => setRoomId(parseInt(e.target.value))}
-                >
-                    <option value={0}>Select room</option>
-                    {rooms.map((r) => (
-                        <option key={r.id} value={r.id}>
-                            {r.name}
-                        </option>
-                    ))}
-                </select>
-            </div>
-
-            <div className="col-md-3">
-                <select
-                    className="form-select"
                     value={userId}
                     onChange={(e) => setUserId(parseInt(e.target.value))}
                 >
-                    <option value={0}>Select user</option>
                     {users.map((u) => (
                         <option key={u.id} value={u.id}>
                             {u.name}
@@ -112,10 +99,10 @@ export default function ReservationForm({ onCreated }: Props) {
                 />
             </div>
 
-            <div className="col-12">
+            <div className="col-12 col-md-3">
                 <button
-                    className="btn btn-primary"
-                    disabled={!roomId || !userId || !startAt || !endAt}
+                    className="btn btn-primary w-100"
+                    disabled={!selectedRoomId || !userId || !startAt || !endAt}
                 >
                     Create
                 </button>
