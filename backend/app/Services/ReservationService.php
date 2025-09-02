@@ -11,7 +11,7 @@ class ReservationService
     public function create(int $roomId, int $userId, string $startAt, string $endAt): Reservation
     {
         $start = CarbonImmutable::parse($startAt);
-        $end   = CarbonImmutable::parse($endAt);
+        $end = CarbonImmutable::parse($endAt);
 
         if ($end->lessThanOrEqualTo($start)) {
             throw new HttpException(422, 'Data/hora final deve ser maior que a inicial');
@@ -22,7 +22,7 @@ class ReservationService
             ->whereNull('canceled_at')
             ->where(function ($q) use ($start, $end) {
                 $q->where('start_at', '<', $end)
-                    ->where('end_at',   '>', $start);
+                    ->where('end_at', '>', $start);
             })
             ->exists();
 
@@ -30,11 +30,11 @@ class ReservationService
             throw new HttpException(409, 'Conflito de Reservas!');
         }
 
-        $r = new Reservation();
-        $r->room_id  = $roomId;
-        $r->user_id  = $userId;
+        $r = new Reservation;
+        $r->room_id = $roomId;
+        $r->user_id = $userId;
         $r->start_at = $start;
-        $r->end_at   = $end;
+        $r->end_at = $end;
         $r->save();
 
         return $r;
