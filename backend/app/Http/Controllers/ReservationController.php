@@ -16,7 +16,7 @@ class ReservationController extends Controller
         $roomId = $request->integer('room_id');
         $userId = $request->integer('user_id');
 
-        $key = 'reservations:' . md5(json_encode([$roomId, $userId]));
+        $key = 'reservations:'.md5(json_encode([$roomId, $userId]));
 
         $items = Cache::remember($key, 60, function () use ($roomId, $userId) {
             $q = Reservation::query()
@@ -39,13 +39,13 @@ class ReservationController extends Controller
     public function store(StoreReservationRequest $request, ReservationService $service)
     {
         $start = $request->date('start_at');
-        $end   = $request->date('end_at');
+        $end = $request->date('end_at');
 
         $r = $service->create(
             $request->integer('room_id'),
             $request->integer('user_id'),
             $start ? $start->toIso8601String() : $request->string('start_at'),
-            $end   ? $end->toIso8601String()   : $request->string('end_at')
+            $end ? $end->toIso8601String() : $request->string('end_at')
         );
         Cache::flush();
 

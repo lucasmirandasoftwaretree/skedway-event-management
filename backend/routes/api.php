@@ -1,4 +1,5 @@
 <?php
+
 use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\RoomController;
 use App\Http\Controllers\UserController;

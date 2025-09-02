@@ -1,6 +1,4 @@
-# skedway-event-management
-
-# Skedway Lite API
+# Skedway Lite API | skedway-event-management
 
 ## Requisitos
 Docker, Docker Compose, Node 20, Composer 2

@@ -2,15 +2,22 @@
 
 namespace Tests\Feature;
 
+use App\Models\Room;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
 class ExampleTest extends TestCase
 {
-    /**
-     * A basic test example.
-     */
+    use RefreshDatabase;
+
     public function test_the_application_returns_a_successful_response(): void
     {
-        $this->getJson('/api/rooms')->assertOk();
+        Room::factory()->create(['name' => 'Sala A']);
+        Room::factory()->create(['name' => 'Sala B']);
+
+        $this->getJson('/api/rooms')
+            ->assertOk()
+            ->assertJsonFragment(['name' => 'Sala A'])
+            ->assertJsonFragment(['name' => 'Sala B']);
     }
 }
