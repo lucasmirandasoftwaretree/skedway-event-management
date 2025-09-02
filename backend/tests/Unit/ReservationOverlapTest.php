@@ -23,7 +23,7 @@ class ReservationOverlapTest extends TestCase
             'start_at'=>'2025-01-01T10:00:00+00:00',
             'end_at'=>'2025-01-01T11:00:00+00:00',
         ]);
-        $this->expectExceptionMessage('Reservation overlaps');
+        $this->expectExceptionMessage('Conflito de Reservas!');
         app(ReservationService::class)->create($room->id,$user->id,'2025-01-01T10:30:00+00:00','2025-01-01T11:30:00+00:00');
     }
 
