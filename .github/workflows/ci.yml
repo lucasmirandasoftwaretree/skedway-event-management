@@ -55,7 +55,8 @@ jobs:
     defaults:
       run:
         working-directory: frontend
-
+    env:
+      VITE_API_BASE_URL: ${{ vars.VITE_API_BASE_URL }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
