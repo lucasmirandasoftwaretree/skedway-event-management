@@ -3,41 +3,46 @@
 namespace App\Services;
 
 use App\Models\Reservation;
-use Illuminate\Support\Facades\DB;
+use Carbon\CarbonImmutable;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class ReservationService
 {
-    public function create(int $roomId, int $userId, string $startIso, string $endIso): Reservation
+    public function create(int $roomId, int $userId, string $startAt, string $endAt): Reservation
     {
-        return DB::transaction(function () use ($roomId, $userId, $startIso, $endIso) {
-            $overlap = Reservation::where('room_id', $roomId)
-                ->whereNull('canceled_at')
-                ->where(function ($q) use ($startIso, $endIso) {
-                    $q->where('start_at', '<', $endIso)->where('end_at', '>', $startIso);
-                })
-                ->lockForUpdate()
-                ->exists();
-            if ($overlap) {
-                abort(422, 'Conflito de Reservas!');
-            }
-            $reservation = Reservation::create([
-                'room_id' => $roomId,
-                'user_id' => $userId,
-                'start_at' => $startIso,
-                'end_at' => $endIso,
-            ]);
+        $start = CarbonImmutable::parse($startAt);
+        $end   = CarbonImmutable::parse($endAt);
 
-            return $reservation;
-        });
+        if ($end->lessThanOrEqualTo($start)) {
+            throw new HttpException(422, 'Data/hora final deve ser maior que a inicial');
+        }
+
+        $hasOverlap = Reservation::query()
+            ->where('room_id', $roomId)
+            ->whereNull('canceled_at')
+            ->where(function ($q) use ($start, $end) {
+                $q->where('start_at', '<', $end)
+                    ->where('end_at',   '>', $start);
+            })
+            ->exists();
+
+        if ($hasOverlap) {
+            throw new HttpException(409, 'Conflito de Reservas!');
+        }
+
+        $r = new Reservation();
+        $r->room_id  = $roomId;
+        $r->user_id  = $userId;
+        $r->start_at = $start;
+        $r->end_at   = $end;
+        $r->save();
+
+        return $r;
     }
 
-    public function cancel(Reservation $reservation): Reservation
+    public function cancel(Reservation $reservation): void
     {
-        return DB::transaction(function () use ($reservation) {
-            $reservation->canceled_at = now();
-            $reservation->save();
-
-            return $reservation;
-        });
+        $reservation->canceled_at = now();
+        $reservation->save();
     }
 }
