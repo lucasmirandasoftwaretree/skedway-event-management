@@ -1,12 +1,15 @@
 import { useEffect, useState } from 'react'
 import api from '../api'
-import type { User, Reservation } from '../types'
+import type { User } from '../types'
+import { isAxiosError } from 'axios'
 import { toast } from 'react-hot-toast'
 
 type Props = {
-    onCreated: (r: Reservation) => void
+    onCreated: () => void
     selectedRoomId: number
 }
+
+type ApiErrorData = { message?: string; errors?: Record<string, string[] | string> }
 
 export default function ReservationForm({ onCreated, selectedRoomId }: Props) {
     const [users, setUsers] = useState<User[]>([])
@@ -26,7 +29,10 @@ export default function ReservationForm({ onCreated, selectedRoomId }: Props) {
                 setUsers(list)
                 if (list[0]) setUserId(list[0].id)
             })
-            .catch((e) => setError(e.message))
+            .catch((e: unknown) => {
+                const msg = e instanceof Error ? e.message : 'Erro ao carregar usuários'
+                setError(msg)
+            })
             .finally(() => setLoading(false))
     }, [])
 
@@ -45,20 +51,22 @@ export default function ReservationForm({ onCreated, selectedRoomId }: Props) {
                 start_at: new Date(startAt).toISOString(),
                 end_at: new Date(endAt).toISOString(),
             }
-            const r = await api.post('/reservations', payload)
-            onCreated(r.data.data as Reservation)
+            await api.post('/reservations', payload)
+            onCreated()
             setStartAt('')
             setEndAt('')
             toast.success('Reserva criada com sucesso!')
-        } catch (err: any) {
-            const apiMsg =
-                err?.response?.data?.message ??
-                    (err?.response?.data?.errors
-                        ? (Object.values(err.response.data.errors).flat() as string[])[0]
-                        : null) ??
-                        err?.message
-
-                        toast.error(String(apiMsg || 'Erro ao criar reserva'))
+        } catch (err: unknown) {
+            let apiMsg: string | null = null
+            if (isAxiosError(err)) {
+                const data = err.response?.data as ApiErrorData | undefined
+                const firstErr =
+                    data?.errors ? (Object.values(data.errors).flat()[0] as string) : null
+                apiMsg = data?.message ?? firstErr ?? err.message
+            } else if (err instanceof Error) {
+                apiMsg = err.message
+            }
+            toast.error(String(apiMsg || 'Erro ao criar reserva'))
         }
     }
 

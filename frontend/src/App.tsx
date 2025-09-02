@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import api from './api'
-import type { Room, Reservation, User } from './types'
+import type { Room, User } from './types'
 import ReservationForm from './components/ReservationForm'
 import ReservationList from './components/ReservationList'
 import { Toaster } from 'react-hot-toast'
@@ -23,7 +23,7 @@ export default function App() {
         })
     }, [])
 
-    const onCreated = (_r: Reservation) => {
+    const onCreated = () => {
         setListKey((k) => k + 1)
     }
 
