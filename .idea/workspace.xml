@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="9c0190e9-5244-4a56-b030-942d32694e95" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/backend/.env.testing" afterDir="false" />
+    </list>
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ComposerSettings">
+    <execution>
+      <executable />
+    </execution>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="develop" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectId" id="31wDFREPtGdPF8n1lm1CVf2x29H" />
+  <component name="PropertiesComponent">
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../Holland_e_Barnes/shop-front" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.detected.package.tslint" value="true" />
+    <property name="node.js.path.for.package.eslint" value="project" />
+    <property name="node.js.path.for.package.tslint" value="project" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="node.js.selected.package.tslint" value="(autodetect)" />
+    <property name="ts.external.directory.path" value="$PROJECT_DIR$/frontend/node_modules/typescript/lib" />
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="9c0190e9-5244-4a56-b030-942d32694e95" name="Default Changelist" comment="" />
+      <created>1756426136855</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1756426136855</updated>
+      <workItem from="1756426137996" duration="22644000" />
+    </task>
+    <task id="LOCAL-00001" summary="feat (frontend) : set up front">
+      <created>1756435392716</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1756435392716</updated>
+    </task>
+    <task id="LOCAL-00002" summary="feat (frontend) : create simple for reservations">
+      <created>1756437623998</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1756437623998</updated>
+    </task>
+    <task id="LOCAL-00003" summary="feat (backend) : set up validations">
+      <created>1756780054766</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1756780054766</updated>
+    </task>
+    <task id="LOCAL-00004" summary="feat (frontend) : set up validations">
+      <created>1756780766593</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1756780766593</updated>
+    </task>
+    <task id="LOCAL-00005" summary="feat (frontend) : set up validations">
+      <created>1756781226018</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1756781226018</updated>
+    </task>
+    <task id="LOCAL-00006" summary="feat (frontend) : set up validations">
+      <created>1756782155579</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1756782155579</updated>
+    </task>
+    <task id="LOCAL-00007" summary="feat (frontend) : set up name filters">
+      <created>1756782876892</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1756782876892</updated>
+    </task>
+    <task id="LOCAL-00008" summary="feat (frontend) : set up toast for cancel reservations">
+      <created>1756783440112</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1756783440112</updated>
+    </task>
+    <task id="LOCAL-00009" summary="feat (backend) : tests adjustments">
+      <created>1756785551952</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1756785551952</updated>
+    </task>
+    <task id="LOCAL-00010" summary="fix (backend &amp; frontend) : adjustments">
+      <created>1756789327020</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1756789327020</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="feat (frontend) : set up front" />
+    <MESSAGE value="feat (frontend) : create simple for reservations" />
+    <MESSAGE value="feat (backend) : set up validations" />
+    <MESSAGE value="feat (frontend) : set up validations" />
+    <MESSAGE value="feat (frontend) : set up name filters" />
+    <MESSAGE value="feat (frontend) : set up toast for cancel reservations" />
+    <MESSAGE value="feat (backend) : tests adjustments" />
+    <MESSAGE value="fix (backend &amp; frontend) : adjustments" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix (backend &amp; frontend) : adjustments" />
+  </component>
+</project>
