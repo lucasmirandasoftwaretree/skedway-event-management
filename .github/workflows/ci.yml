@@ -19,70 +19,104 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Start containers
+      - name: Show tree
         run: |
-          docker version
-          docker compose version
-          docker compose up -d --build backend db
-          docker compose ps
+          pwd
+          ls -la
+          echo "---- backend ----"
+          ls -la backend || true
 
-      - name: Prepare Laravel (composer, env, key, migrate)
+      - name: Env (create backend/.env)
+        shell: bash
         run: |
-          docker compose exec -T backend php -r "file_exists('.env') || copy('.env.example','.env');"
-          docker compose exec -T backend composer install --no-interaction --prefer-dist --no-progress
-          docker compose exec -T backend php artisan key:generate
-          for i in {1..20}; do
-            if docker compose exec -T backend php -r "try { new PDO('mysql:host='.(getenv('DB_HOST')?:'db').';port='.(getenv('DB_PORT')?:'3306'), getenv('DB_USERNAME')?:'root', getenv('DB_PASSWORD')?:''); echo 'ok'; } catch (Throwable $e) { exit(1);}"; then
-              echo 'DB ready'; break
-            fi
-            echo 'Waiting DB...'; sleep 3
-          done
-          docker compose exec -T backend php artisan migrate --force || true
+          set -euxo pipefail
+          cd backend
+          if [[ -f .env.example ]]; then
+            cp -f .env.example .env
+          else
+            cat > .env <<'EOF'
+  APP_NAME=Laravel
+  APP_ENV=local
+  APP_KEY=
+  APP_DEBUG=true
+  APP_URL=http://localhost
+  DB_CONNECTION=mysql
+  DB_HOST=db
+  DB_PORT=3306
+  DB_DATABASE=app
+  DB_USERNAME=app
+  DB_PASSWORD=app
+  REDIS_HOST=redis
+  REDIS_PORT=6379
+  EOF
+  fi
+  sed -i -E 's/^DB_HOST=.*/DB_HOST=db/' .env || echo 'DB_HOST=db' >> .env
+  sed -i -E 's/^DB_PORT=.*/DB_PORT=3306/' .env || echo 'DB_PORT=3306' >> .env
+  sed -i -E 's/^DB_DATABASE=.*/DB_DATABASE=app/' .env || echo 'DB_DATABASE=app' >> .env
+  sed -i -E 's/^DB_USERNAME=.*/DB_USERNAME=app/' .env || echo 'DB_USERNAME=app' >> .env
+  sed -i -E 's/^DB_PASSWORD=.*/DB_PASSWORD=app/' .env || echo 'DB_PASSWORD=app' >> .env
+  sed -i -E 's/^REDIS_HOST=.*/REDIS_HOST=redis/' .env || echo 'REDIS_HOST=redis' >> .env
+  if ! grep -q '^APP_KEY=' .env || [[ -z "$(grep '^APP_KEY=' .env | cut -d= -f2)" ]]; then
+  echo "APP_KEY=base64:$(php -r 'echo base64_encode(random_bytes(32));')" >> .env
+  fi
+  echo "---- .env head ----"; head -n 25 .env
 
-      - name: PHP Style (Pint)
-        run: docker compose exec -T backend php vendor/bin/pint --test
+- name: Start containers
+  run: |
+    docker compose up -d --build db redis backend
+    docker compose ps
 
-      - name: PHP Unit
-        run: docker compose exec -T backend php vendor/bin/phpunit --testdox
+- name: Prepare Laravel (composer, key, migrate)
+  run: |
+    docker compose exec -T backend composer install --no-interaction --prefer-dist --no-progress
+    docker compose exec -T backend php artisan key:generate || true
+    for i in {1..20}; do
+      if docker compose exec -T backend php -r "try { new PDO('mysql:host=db;port=3306','app','app'); echo 'ok'; } catch (Throwable $e) { exit(1);}"; then
+        echo 'DB ready'; break
+      fi
+      echo 'Waiting DB...'; sleep 3
+    done
+    docker compose exec -T backend php artisan migrate --force || true
 
-      - name: Teardown
-        if: always()
-        run: docker compose down -v
+- name: PHP Style (Pint)
+  run: docker compose exec -T backend php vendor/bin/pint --test
 
-  frontend:
-    name: Frontend (Vite/React)
-    runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: frontend
-    env:
-      VITE_API_BASE_URL: ${{ vars.VITE_API_BASE_URL }}
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+- name: PHP Unit
+  run: docker compose exec -T backend php vendor/bin/phpunit --testdox
 
-      - name: Setup Node
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20
-          cache: npm
-          cache-dependency-path: frontend/package-lock.json
+- name: Teardown
+  if: always()
+  run: docker compose down -v || true
 
-      - name: Install
-        run: npm ci
+frontend:
+  name: Frontend (Vite/React)
+  runs-on: ubuntu-latest
+  defaults:
+    run:
+      working-directory: frontend
+  env:
+    VITE_API_BASE_URL: ${{ vars.VITE_API_BASE_URL }}
 
-      - name: Typecheck
-        run: npm run typecheck --if-present
-
-      - name: Lint
-        run: npm run lint --if-present
-
-      - name: Build
-        run: npm run build
-
-      - name: Upload dist
-        if: success()
-        uses: actions/upload-artifact@v4
-        with:
-          name: frontend-dist
-          path: frontend/dist
+  steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+    - name: Setup Node
+      uses: actions/setup-node@v4
+      with:
+        node-version: 20
+        cache: npm
+        cache-dependency-path: frontend/package-lock.json
+    - name: Install
+      run: npm ci
+    - name: Typecheck
+      run: npm run typecheck --if-present
+    - name: Lint
+      run: npm run lint --if-present
+    - name: Build
+      run: npm run build
+    - name: Upload dist
+      if: success()
+      uses: actions/upload-artifact@v4
+      with:
+        name: frontend-dist
+        path: frontend/dist
