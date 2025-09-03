@@ -19,9 +19,13 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Generate APP_KEY for CI
+      - name: Create dummy backend .env (compose validation)
         run: |
-          echo "APP_KEY=base64:$(openssl rand -base64 32)" >> "$GITHUB_ENV"
+          mkdir -p backend
+          [ -f backend/.env ] || echo "# dummy for CI" > backend/.env
+
+      - name: Generate APP_KEY for CI
+        run: echo "APP_KEY=base64:$(openssl rand -base64 32)" >> "$GITHUB_ENV"
 
       - name: Start containers (CI override)
         run: |
