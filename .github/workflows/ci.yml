@@ -19,6 +19,14 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Prepare .env for docker compose
+        run: |
+          if [ ! -f backend/.env ]; then
+            cp backend/.env.example backend/.env
+          fi
+          echo "Created backend/.env for compose:"
+          head -n 20 backend/.env || true
+
       - name: Start containers
         run: |
           docker version
@@ -47,7 +55,7 @@ jobs:
 
       - name: Teardown
         if: always()
-        run: docker compose down -v
+        run: docker compose down -v || true
 
   frontend:
     name: Frontend (Vite/React)
