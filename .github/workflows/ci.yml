@@ -19,111 +19,99 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      # >>>> ESTE PASSO RESOLVE O ERRO DO .env <<<<
-      - name: Create backend .env (required by docker compose)
-        shell: bash
+      # <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+      - name: Create backend .env for CI
         run: |
-          set -euxo pipefail
-          if [[ ! -f backend/.env ]]; then
-            if [[ -f backend/.env.example ]]; then
-              cp backend/.env.example backend/.env
-            else
-              cat > backend/.env <<'EOF'
-  APP_NAME=Skedway
-  APP_ENV=local
-  APP_KEY=
-  APP_DEBUG=true
-  APP_URL=http://localhost
-  DB_CONNECTION=mysql
-  DB_HOST=db
-  DB_PORT=3306
-  DB_DATABASE=app
-  DB_USERNAME=app
-  DB_PASSWORD=app
-  CACHE_DRIVER=redis
-  SESSION_DRIVER=redis
-  REDIS_HOST=redis
-  REDIS_PORT=6379
-  EOF
-  fi
-  sed -i -E 's/^DB_HOST=.*/DB_HOST=db/' backend/.env || echo 'DB_HOST=db' >> backend/.env
-  sed -i -E 's/^DB_PORT=.*/DB_PORT=3306/' backend/.env || echo 'DB_PORT=3306' >> backend/.env
-  sed -i -E 's/^DB_DATABASE=.*/DB_DATABASE=app/' backend/.env || echo 'DB_DATABASE=app' >> backend/.env
-  sed -i -E 's/^DB_USERNAME=.*/DB_USERNAME=app/' backend/.env || echo 'DB_USERNAME=app' >> backend/.env
-  sed -i -E 's/^DB_PASSWORD=.*/DB_PASSWORD=app/' backend/.env || echo 'DB_PASSWORD=app' >> backend/.env
-  sed -i -E 's/^REDIS_HOST=.*/REDIS_HOST=redis/' backend/.env || echo 'REDIS_HOST=redis' >> backend/.env
-  fi
-  echo "---- backend/.env (first lines) ----"
-  head -n 30 backend/.env || true
+          mkdir -p backend
+          cat > backend/.env <<'EOF'
+          APP_NAME=Skedway
+          APP_ENV=testing
+          APP_KEY=
+          APP_DEBUG=true
+          APP_URL=http://localhost
 
-- name: Start containers
-  run: |
-    docker version
-    docker compose version
-    docker compose up -d --build db redis backend
-    docker compose ps
+          DB_CONNECTION=mysql
+          DB_HOST=db
+          DB_PORT=3306
+          DB_DATABASE=app
+          DB_USERNAME=app
+          DB_PASSWORD=app
 
-- name: Prepare Laravel (composer, env, key, migrate)
-  run: |
-    docker compose exec -T backend php -r "file_exists('.env') || copy('.env.example','.env');"
-    docker compose exec -T backend composer install --no-interaction --prefer-dist --no-progress
-    docker compose exec -T backend php artisan key:generate || true
+          CACHE_DRIVER=file
+          SESSION_DRIVER=array
+          QUEUE_CONNECTION=sync
 
-    # Espera MySQL ficar pronto usando o cliente do próprio contêiner do MySQL
-    for i in {1..20}; do
-      if docker compose exec -T db mysql -uapp -papp -e 'SELECT 1' >/dev/null 2>&1; then
-        echo 'DB ready'; break
-      fi
-      echo 'Waiting DB...'; sleep 3
-    done
+          REDIS_HOST=redis
+          REDIS_PORT=6379
+          EOF
+          KEY=$(openssl rand -base64 32)
+          sed -i "s|^APP_KEY=.*|APP_KEY=base64:${KEY}|" backend/.env
+      # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
-    docker compose exec -T backend php artisan migrate --force || true
+      - name: Start containers
+        run: |
+          docker version
+          docker compose version
+          docker compose up -d --build backend db
+          docker compose ps
 
-- name: PHP Style (Pint)
-  run: docker compose exec -T backend php vendor/bin/pint --test
+      - name: Prepare Laravel (composer, env, key, migrate)
+        run: |
+          docker compose exec -T backend composer install --no-interaction --prefer-dist --no-progress
+          docker compose exec -T backend php artisan key:generate
+          for i in {1..20}; do
+            if docker compose exec -T backend php -r "try { new PDO('mysql:host='.(getenv('DB_HOST')?:'db').';port='.(getenv('DB_PORT')?:'3306'), getenv('DB_USERNAME')?:'app', getenv('DB_PASSWORD')?:'app'); echo 'ok'; } catch (Throwable $e) { exit(1);}"; then
+              echo 'DB ready'; break
+            fi
+            echo 'Waiting DB...'; sleep 3
+          done
+          docker compose exec -T backend php artisan migrate --force || true
 
-- name: PHP Unit
-  run: docker compose exec -T backend php vendor/bin/phpunit --testdox
+      - name: PHP Style (Pint)
+        run: docker compose exec -T backend php vendor/bin/pint --test
 
-- name: Teardown
-  if: always()
-  run: docker compose down -v
+      - name: PHP Unit
+        run: docker compose exec -T backend php vendor/bin/phpunit --testdox
 
-frontend:
-  name: Frontend (Vite/React)
-  runs-on: ubuntu-latest
-  defaults:
-    run:
-      working-directory: frontend
-  env:
-    VITE_API_BASE_URL: ${{ vars.VITE_API_BASE_URL }}
+      - name: Teardown
+        if: always()
+        run: docker compose down -v
 
-  steps:
-    - name: Checkout
-      uses: actions/checkout@v4
+  frontend:
+    name: Frontend (Vite/React)
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: frontend
+    env:
+      VITE_API_BASE_URL: ${{ vars.VITE_API_BASE_URL }}
 
-    - name: Setup Node
-      uses: actions/setup-node@v4
-      with:
-        node-version: 20
-        cache: npm
-        cache-dependency-path: frontend/package-lock.json
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
 
-    - name: Install
-      run: npm ci
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
 
-    - name: Typecheck
-      run: npm run typecheck --if-present
+      - name: Install
+        run: npm ci
 
-    - name: Lint
-      run: npm run lint --if-present
+      - name: Typecheck
+        run: npm run typecheck --if-present
 
-    - name: Build
-      run: npm run build
+      - name: Lint
+        run: npm run lint --if-present
 
-    - name: Upload dist
-      if: success()
-      uses: actions/upload-artifact@v4
-      with:
-        name: frontend-dist
-        path: frontend/dist
+      - name: Build
+        run: npm run build
+
+      - name: Upload dist
+        if: success()
+        uses: actions/upload-artifact@v4
+        with:
+          name: frontend-dist
+          path: frontend/dist
