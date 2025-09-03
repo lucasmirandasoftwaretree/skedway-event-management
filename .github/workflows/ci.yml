@@ -19,23 +19,17 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Show tree
-        run: |
-          pwd
-          ls -la
-          echo "---- backend ----"
-          ls -la backend || true
-
-      - name: Env (create backend/.env)
+      # >>>> ESTE PASSO RESOLVE O ERRO DO .env <<<<
+      - name: Create backend .env (required by docker compose)
         shell: bash
         run: |
           set -euxo pipefail
-          cd backend
-          if [[ -f .env.example ]]; then
-            cp -f .env.example .env
-          else
-            cat > .env <<'EOF'
-  APP_NAME=Laravel
+          if [[ ! -f backend/.env ]]; then
+            if [[ -f backend/.env.example ]]; then
+              cp backend/.env.example backend/.env
+            else
+              cat > backend/.env <<'EOF'
+  APP_NAME=Skedway
   APP_ENV=local
   APP_KEY=
   APP_DEBUG=true
@@ -46,36 +40,43 @@ jobs:
   DB_DATABASE=app
   DB_USERNAME=app
   DB_PASSWORD=app
+  CACHE_DRIVER=redis
+  SESSION_DRIVER=redis
   REDIS_HOST=redis
   REDIS_PORT=6379
   EOF
   fi
-  sed -i -E 's/^DB_HOST=.*/DB_HOST=db/' .env || echo 'DB_HOST=db' >> .env
-  sed -i -E 's/^DB_PORT=.*/DB_PORT=3306/' .env || echo 'DB_PORT=3306' >> .env
-  sed -i -E 's/^DB_DATABASE=.*/DB_DATABASE=app/' .env || echo 'DB_DATABASE=app' >> .env
-  sed -i -E 's/^DB_USERNAME=.*/DB_USERNAME=app/' .env || echo 'DB_USERNAME=app' >> .env
-  sed -i -E 's/^DB_PASSWORD=.*/DB_PASSWORD=app/' .env || echo 'DB_PASSWORD=app' >> .env
-  sed -i -E 's/^REDIS_HOST=.*/REDIS_HOST=redis/' .env || echo 'REDIS_HOST=redis' >> .env
-  if ! grep -q '^APP_KEY=' .env || [[ -z "$(grep '^APP_KEY=' .env | cut -d= -f2)" ]]; then
-  echo "APP_KEY=base64:$(php -r 'echo base64_encode(random_bytes(32));')" >> .env
+  sed -i -E 's/^DB_HOST=.*/DB_HOST=db/' backend/.env || echo 'DB_HOST=db' >> backend/.env
+  sed -i -E 's/^DB_PORT=.*/DB_PORT=3306/' backend/.env || echo 'DB_PORT=3306' >> backend/.env
+  sed -i -E 's/^DB_DATABASE=.*/DB_DATABASE=app/' backend/.env || echo 'DB_DATABASE=app' >> backend/.env
+  sed -i -E 's/^DB_USERNAME=.*/DB_USERNAME=app/' backend/.env || echo 'DB_USERNAME=app' >> backend/.env
+  sed -i -E 's/^DB_PASSWORD=.*/DB_PASSWORD=app/' backend/.env || echo 'DB_PASSWORD=app' >> backend/.env
+  sed -i -E 's/^REDIS_HOST=.*/REDIS_HOST=redis/' backend/.env || echo 'REDIS_HOST=redis' >> backend/.env
   fi
-  echo "---- .env head ----"; head -n 25 .env
+  echo "---- backend/.env (first lines) ----"
+  head -n 30 backend/.env || true
 
 - name: Start containers
   run: |
+    docker version
+    docker compose version
     docker compose up -d --build db redis backend
     docker compose ps
 
-- name: Prepare Laravel (composer, key, migrate)
+- name: Prepare Laravel (composer, env, key, migrate)
   run: |
+    docker compose exec -T backend php -r "file_exists('.env') || copy('.env.example','.env');"
     docker compose exec -T backend composer install --no-interaction --prefer-dist --no-progress
     docker compose exec -T backend php artisan key:generate || true
+
+    # Espera MySQL ficar pronto usando o cliente do próprio contêiner do MySQL
     for i in {1..20}; do
-      if docker compose exec -T backend php -r "try { new PDO('mysql:host=db;port=3306','app','app'); echo 'ok'; } catch (Throwable $e) { exit(1);}"; then
+      if docker compose exec -T db mysql -uapp -papp -e 'SELECT 1' >/dev/null 2>&1; then
         echo 'DB ready'; break
       fi
       echo 'Waiting DB...'; sleep 3
     done
+
     docker compose exec -T backend php artisan migrate --force || true
 
 - name: PHP Style (Pint)
@@ -86,7 +87,7 @@ jobs:
 
 - name: Teardown
   if: always()
-  run: docker compose down -v || true
+  run: docker compose down -v
 
 frontend:
   name: Frontend (Vite/React)
@@ -100,20 +101,26 @@ frontend:
   steps:
     - name: Checkout
       uses: actions/checkout@v4
+
     - name: Setup Node
       uses: actions/setup-node@v4
       with:
         node-version: 20
         cache: npm
         cache-dependency-path: frontend/package-lock.json
+
     - name: Install
       run: npm ci
+
     - name: Typecheck
       run: npm run typecheck --if-present
+
     - name: Lint
       run: npm run lint --if-present
+
     - name: Build
       run: npm run build
+
     - name: Upload dist
       if: success()
       uses: actions/upload-artifact@v4
