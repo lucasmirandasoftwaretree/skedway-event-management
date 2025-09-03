@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="9c0190e9-5244-4a56-b030-942d32694e95" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.github/workflows/ci.yml" beforeDir="false" afterPath="$PROJECT_DIR$/.github/workflows/ci.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.github/workflows/backend.yml" beforeDir="false" afterPath="$PROJECT_DIR$/.github/workflows/backend.yml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -360,7 +360,28 @@
       <option name="project" value="LOCAL" />
       <updated>1756879974346</updated>
     </task>
-    <option name="localTasksCounter" value="26" />
+    <task id="LOCAL-00026" summary="fix (backend+frontend): change workflow">
+      <created>1756880491109</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1756880491109</updated>
+    </task>
+    <task id="LOCAL-00027" summary="fix (backend+frontend): change workflow">
+      <created>1756880601277</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1756880601277</updated>
+    </task>
+    <task id="LOCAL-00028" summary="Revert &quot;fix (backend+frontend): change workflow&quot;&#10;&#10;This reverts commit 07d6d4b5">
+      <created>1756880879355</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1756880879355</updated>
+    </task>
+    <option name="localTasksCounter" value="29" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -394,6 +415,7 @@
     <MESSAGE value="fix (backend): env" />
     <MESSAGE value="fix (backend): change workflow" />
     <MESSAGE value="fix (backend+frontend): change workflow" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix (backend+frontend): change workflow" />
+    <MESSAGE value="Revert &quot;fix (backend+frontend): change workflow&quot;&#10;&#10;This reverts commit 07d6d4b5" />
+    <option name="LAST_COMMIT_MESSAGE" value="Revert &quot;fix (backend+frontend): change workflow&quot;&#10;&#10;This reverts commit 07d6d4b5" />
   </component>
 </project>
