@@ -2,8 +2,47 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="9c0190e9-5244-4a56-b030-942d32694e95" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/frontend/.env.production" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docker-compose.prod.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.prod.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/node_modules/.tmp/tsconfig.app.tsbuildinfo" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/node_modules/.tmp/tsconfig.node.tsbuildinfo" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/node_modules/.vite/deps/_metadata.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/node_modules/.vite/deps/axios.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/node_modules/.vite/deps/axios.js.map" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/node_modules/.vite/deps/chunk-BQYK6RGN.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/node_modules/.vite/deps/chunk-BQYK6RGN.js.map" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/node_modules/.vite/deps/chunk-G3PMV62Z.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/node_modules/.vite/deps/chunk-G3PMV62Z.js.map" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/node_modules/.vite/deps/package.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/node_modules/.vite/deps/react-dom_client.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/node_modules/.vite/deps/react-dom_client.js.map" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/node_modules/.vite/deps/react-hot-toast.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/node_modules/.vite/deps/react-hot-toast.js.map" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/node_modules/.vite/deps/react.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/node_modules/.vite/deps/react.js.map" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/node_modules/@types/babel__core/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/node_modules/@types/babel__core/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/node_modules/@types/babel__generator/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/node_modules/@types/babel__generator/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/node_modules/@types/babel__template/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/node_modules/@types/babel__template/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/node_modules/@types/babel__traverse/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/node_modules/@types/babel__traverse/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/node_modules/@types/estree/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/node_modules/@types/estree/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/node_modules/@types/json-schema/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/node_modules/@types/json-schema/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/node_modules/@types/json5/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/node_modules/@types/json5/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/node_modules/@types/node/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/node_modules/@types/node/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/node_modules/@types/react-dom/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/node_modules/@types/react-dom/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/node_modules/@types/react/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/node_modules/@types/react/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/node_modules/axios/CHANGELOG.md" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/node_modules/axios/CHANGELOG.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/node_modules/color-name/LICENSE" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/node_modules/color-name/LICENSE" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/node_modules/color-name/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/node_modules/color-name/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/node_modules/color-name/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/node_modules/color-name/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/node_modules/color-name/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/node_modules/color-name/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/node_modules/eslint-plugin-react-hooks/cjs/eslint-plugin-react-hooks.development.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/node_modules/eslint-plugin-react-hooks/cjs/eslint-plugin-react-hooks.development.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/node_modules/eslint-plugin-react-hooks/cjs/eslint-plugin-react-hooks.production.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/node_modules/eslint-plugin-react-hooks/cjs/eslint-plugin-react-hooks.production.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/node_modules/prettier/THIRD-PARTY-NOTICES.md" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/node_modules/prettier/THIRD-PARTY-NOTICES.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/node_modules/rollup/dist/bin/rollup" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/node_modules/rollup/dist/bin/rollup" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/node_modules/typescript/LICENSE.txt" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/node_modules/typescript/LICENSE.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/node_modules/typescript/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/node_modules/typescript/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/node_modules/typescript/ThirdPartyNoticeText.txt" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/node_modules/typescript/ThirdPartyNoticeText.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/api.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/api.ts" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -277,7 +316,14 @@
       <option name="project" value="LOCAL" />
       <updated>1756858351842</updated>
     </task>
-    <option name="localTasksCounter" value="15" />
+    <task id="LOCAL-00015" summary="feat (backend + frontend): set up serveless config prod">
+      <created>1756859458268</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1756859458268</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -307,6 +353,7 @@
     <MESSAGE value="fix (backend &amp; frontend) : adjustments" />
     <MESSAGE value="fix (backend &amp; frontend) : readme adjustments title" />
     <MESSAGE value="feat (backend): set up serveless config prod" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat (backend): set up serveless config prod" />
+    <MESSAGE value="feat (backend + frontend): set up serveless config prod" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat (backend + frontend): set up serveless config prod" />
   </component>
 </project>
