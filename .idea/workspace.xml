@@ -291,7 +291,14 @@
       <option name="project" value="LOCAL" />
       <updated>1756869136349</updated>
     </task>
-    <option name="localTasksCounter" value="17" />
+    <task id="LOCAL-00017" summary="fix (backend): env">
+      <created>1756869503588</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1756869503588</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -322,6 +329,7 @@
     <MESSAGE value="fix (backend &amp; frontend) : readme adjustments title" />
     <MESSAGE value="feat (backend): set up serveless config prod" />
     <MESSAGE value="feat (backend + frontend): set up serveless config prod" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat (backend + frontend): set up serveless config prod" />
+    <MESSAGE value="fix (backend): env" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix (backend): env" />
   </component>
 </project>
