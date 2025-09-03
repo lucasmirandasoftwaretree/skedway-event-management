@@ -19,20 +19,27 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Start containers
+      - name: Create dummy backend .env (compose validation)
+        run: |
+          mkdir -p backend
+          [ -f backend/.env ] || echo "# dummy for CI" > backend/.env
+
+      - name: Generate APP_KEY for CI
+        run: echo "APP_KEY=base64:$(openssl rand -base64 32)" >> "$GITHUB_ENV"
+
+      - name: Start containers (CI override)
         run: |
           docker version
           docker compose version
-          docker compose up -d --build backend db
+          docker compose -f docker-compose.yml -f docker-compose.ci.yml up -d --build db backend
           docker compose ps
 
-      - name: Prepare Laravel (composer, env, key, migrate)
+      - name: Prepare Laravel (composer, key, migrate)
         run: |
-          docker compose exec -T backend php -r "file_exists('.env') || copy('.env.example','.env');"
           docker compose exec -T backend composer install --no-interaction --prefer-dist --no-progress
-          docker compose exec -T backend php artisan key:generate
+          docker compose exec -T backend php artisan key:generate || true
           for i in {1..20}; do
-            if docker compose exec -T backend php -r "try { new PDO('mysql:host='.(getenv('DB_HOST')?:'db').';port='.(getenv('DB_PORT')?:'3306'), getenv('DB_USERNAME')?:'root', getenv('DB_PASSWORD')?:''); echo 'ok'; } catch (Throwable $e) { exit(1);}"; then
+            if docker compose exec -T backend php -r "try { new PDO('mysql:host='.(getenv('DB_HOST')?:'db').';port='.(getenv('DB_PORT')?:'3306'), getenv('DB_USERNAME')?:'app', getenv('DB_PASSWORD')?:'app'); echo 'ok'; } catch (Throwable $e) { exit(1);}"; then
               echo 'DB ready'; break
             fi
             echo 'Waiting DB...'; sleep 3
@@ -47,7 +54,7 @@ jobs:
 
       - name: Teardown
         if: always()
-        run: docker compose down -v
+        run: docker compose -f docker-compose.yml -f docker-compose.ci.yml down -v
 
   frontend:
     name: Frontend (Vite/React)
@@ -57,6 +64,7 @@ jobs:
         working-directory: frontend
     env:
       VITE_API_BASE_URL: ${{ vars.VITE_API_BASE_URL }}
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4

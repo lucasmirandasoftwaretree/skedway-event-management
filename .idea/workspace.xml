@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="9c0190e9-5244-4a56-b030-942d32694e95" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.github/workflows/backend.yml" beforeDir="false" afterPath="$PROJECT_DIR$/.github/workflows/backend.yml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docker-compose.prod.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.prod.yml" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -155,6 +155,12 @@
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
     <property name="ts.external.directory.path" value="$PROJECT_DIR$/frontend/node_modules/typescript/lib" />
   </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/.github/workflows" />
+      <recent name="$PROJECT_DIR$" />
+    </key>
+  </component>
   <component name="RunDashboard">
     <option name="ruleStates">
       <list>
@@ -277,7 +283,105 @@
       <option name="project" value="LOCAL" />
       <updated>1756858351842</updated>
     </task>
-    <option name="localTasksCounter" value="15" />
+    <task id="LOCAL-00015" summary="feat (backend + frontend): set up serveless config prod">
+      <created>1756859458268</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1756859458268</updated>
+    </task>
+    <task id="LOCAL-00016" summary="feat (backend + frontend): set up serveless config prod">
+      <created>1756869136349</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1756869136349</updated>
+    </task>
+    <task id="LOCAL-00017" summary="fix (backend): env">
+      <created>1756869503588</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1756869503588</updated>
+    </task>
+    <task id="LOCAL-00018" summary="fix (backend): env">
+      <created>1756869925807</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1756869925807</updated>
+    </task>
+    <task id="LOCAL-00019" summary="fix (backend): env">
+      <created>1756876924281</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1756876924281</updated>
+    </task>
+    <task id="LOCAL-00020" summary="fix (backend): env">
+      <created>1756877424552</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1756877424553</updated>
+    </task>
+    <task id="LOCAL-00021" summary="fix (backend): change workflow">
+      <created>1756877619046</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1756877619046</updated>
+    </task>
+    <task id="LOCAL-00022" summary="fix (backend): change workflow">
+      <created>1756877694449</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1756877694449</updated>
+    </task>
+    <task id="LOCAL-00023" summary="fix (backend+frontend): change workflow">
+      <created>1756878113389</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1756878113389</updated>
+    </task>
+    <task id="LOCAL-00024" summary="fix (backend+frontend): change workflow">
+      <created>1756879593393</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1756879593393</updated>
+    </task>
+    <task id="LOCAL-00025" summary="fix (backend+frontend): change workflow">
+      <created>1756879974346</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1756879974346</updated>
+    </task>
+    <task id="LOCAL-00026" summary="fix (backend+frontend): change workflow">
+      <created>1756880491109</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1756880491109</updated>
+    </task>
+    <task id="LOCAL-00027" summary="fix (backend+frontend): change workflow">
+      <created>1756880601277</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1756880601277</updated>
+    </task>
+    <task id="LOCAL-00028" summary="Revert &quot;fix (backend+frontend): change workflow&quot;&#10;&#10;This reverts commit 07d6d4b5">
+      <created>1756880879355</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1756880879355</updated>
+    </task>
+    <option name="localTasksCounter" value="29" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -307,6 +411,11 @@
     <MESSAGE value="fix (backend &amp; frontend) : adjustments" />
     <MESSAGE value="fix (backend &amp; frontend) : readme adjustments title" />
     <MESSAGE value="feat (backend): set up serveless config prod" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat (backend): set up serveless config prod" />
+    <MESSAGE value="feat (backend + frontend): set up serveless config prod" />
+    <MESSAGE value="fix (backend): env" />
+    <MESSAGE value="fix (backend): change workflow" />
+    <MESSAGE value="fix (backend+frontend): change workflow" />
+    <MESSAGE value="Revert &quot;fix (backend+frontend): change workflow&quot;&#10;&#10;This reverts commit 07d6d4b5" />
+    <option name="LAST_COMMIT_MESSAGE" value="Revert &quot;fix (backend+frontend): change workflow&quot;&#10;&#10;This reverts commit 07d6d4b5" />
   </component>
 </project>
