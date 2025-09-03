@@ -46,6 +46,9 @@ POST   /api/reservations
 DELETE /api/reservations/{id}
 ```
 
+## 🖥️ Main access for Backend API (production)
+http://18.190.31.202/api/rooms
+
 ## Rules
 * Reservations cannot overlap in the same room
 
@@ -71,6 +74,8 @@ docker compose exec backend php vendor/bin/pint
 The Vite dev server runs in a container on port 5173:
 * http://localhost:5173
 
+## 🖥️ Frontend (production)
+* http://18.190.31.202/
 
 ## 🤖 CI (GitHub Actions)
 Two workflows are used:
